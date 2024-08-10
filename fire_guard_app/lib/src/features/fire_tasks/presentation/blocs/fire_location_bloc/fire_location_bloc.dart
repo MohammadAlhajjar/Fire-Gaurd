@@ -1,0 +1,41 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:bloc/bloc.dart';
+import 'package:fire_guard_app/src/features/fire_tasks/data/models/fire_location_model.dart';
+import 'package:meta/meta.dart';
+
+import 'package:fire_guard_app/src/features/fire_tasks/data/models/fire_node_model.dart';
+import 'package:fire_guard_app/src/features/fire_tasks/data/respository/fire_location_repository.dart';
+
+import '../../../../../../core/helper/bloc_helper.dart';
+
+part 'fire_location_event.dart';
+part 'fire_location_state.dart';
+
+class FireLocationBloc extends Bloc<FireLocationEvent, FireLocationState> {
+  FireLocationRepo fireLocationRepo;
+  FireLocationBloc({
+    required this.fireLocationRepo,
+  }) : super(FireLocationInitial()) {
+    on<GetFireLocation>((event, emit) async {
+      emit(FireLocationLoading());
+      var failureOrFireLocation =
+          await fireLocationRepo.getFireLocation(fireId: event.fireId);
+
+      failureOrFireLocation.fold((failure) {
+        emit(
+          FireLocationFailure(
+            errorMessage: FailureHelper.mapFailureToMessage(
+              failure,
+            ),
+          ),
+        );
+      }, (fireLocation) {
+        emit(
+          FireLocationSuccess(
+            fireLocationModel: fireLocation,
+          ),
+        );
+      });
+    });
+  }
+}
