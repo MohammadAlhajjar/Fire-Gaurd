@@ -1,9 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fire_guard_app/main.dart';
+import 'package:fire_guard_app/src/features/auth/presentation/view/sign_in_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../../core/resource/colors_manager.dart';
 import '../../../../../core/resource/styles_manager.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -14,11 +18,11 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   bool isDark = false;
-  final List settingsItems = [
-    {
-      'title': 'Language',
-      'leading': Icons.language,
-      'trailing': DropdownButton<String>(
+  final List<Widget> settingsItems = [
+    ListTile(
+      title: const Text('Language'),
+      leading: const Icon(Icons.language),
+      trailing: DropdownButton<String>(
         items: const [
           DropdownMenuItem(
             child: Text(
@@ -28,31 +32,44 @@ class _SettingsViewState extends State<SettingsView> {
         ],
         onChanged: (Object? value) {},
       ),
-    },
-    {
-      'title': 'Notifaication',
-      'leading': Icons.notifications,
-      'trailing': null,
-    },
-    {
-      'title': 'Dark Mode',
-      'leading': Icons.wb_sunny_outlined,
-      'trailing': Switch(
+    ),
+    const ListTile(
+      title: Text('Notifications'),
+      leading: Icon(Icons.notifications),
+    ),
+    ListTile(
+      title: const Text('Dark Mode'),
+      leading: const Icon(Icons.wb_sunny_outlined),
+      trailing: Switch(
         activeColor: ColorsManager.primaryColor,
         value: true,
         onChanged: (bool value) {},
       ),
-    },
-    {
-      'title': 'Privacy Policy',
-      'leading': Icons.privacy_tip_outlined,
-      'trailing': null,
-    },
-    {
-      'title': 'Logout',
-      'leading': Icons.logout,
-      'trailing': null,
-    },
+    ),
+    const ListTile(
+      title: Text('Privacy Policy'),
+      leading: Icon(Icons.privacy_tip_outlined),
+    ),
+    ListTile(
+      onTap: () {
+        sharedPreferences.clear();
+        navigatorKey.currentState!.pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => SignInView(),
+          ),
+        );
+      },
+      title: Text(
+        'Logout',
+        style: TextStyle(
+          color: ColorsManager.primaryColor,
+        ),
+      ),
+      leading: Icon(
+        Icons.logout,
+        color: ColorsManager.primaryColor,
+      ),
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -83,11 +100,7 @@ class _SettingsViewState extends State<SettingsView> {
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) {
-                return SettingsItem(
-                  title: settingsItems[index]['title'],
-                  iconData: settingsItems[index]['leading'],
-                  trailing: settingsItems[index]['trailing'],
-                );
+                return settingsItems[index];
               },
               separatorBuilder: (context, index) => const Gap(14),
               itemCount: settingsItems.length,

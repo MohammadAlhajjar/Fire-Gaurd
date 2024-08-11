@@ -128,21 +128,21 @@ class _HomeViewState extends State<HomeView> {
                     if (state is FireStationCenterSuccess) {
                       fireTruckLatLng = LatLng(
                         double.parse(
-                            state.fireStationCenterDetails.address!.latitude!),
+                            state.fireStationCentersDetails[0].latitude!),
                         double.parse(
-                          state.fireStationCenterDetails.address!.longitude!,
+                          state.fireStationCentersDetails[0].longitude!,
                         ),
                       );
+
                       return FlutterMap(
                         options: MapOptions(
                           // initialCenter: LatLng(35, 38),
                           initialCenter: LatLng(
                             double.parse(
-                              state.fireStationCenterDetails.address!.latitude!,
+                              state.fireStationCentersDetails[0].latitude!,
                             ),
                             double.parse(
-                              state
-                                  .fireStationCenterDetails.address!.longitude!,
+                              state.fireStationCentersDetails[0].longitude!,
                             ),
                           ),
 
@@ -154,36 +154,35 @@ class _HomeViewState extends State<HomeView> {
                             userAgentPackageName:
                                 ConstantsManager.userAgentPackageName,
                           ),
-                          CircleLayer(
-                            circles: [
-                              CircleMarker(
-                                point: LatLng(
-                                  double.parse(
-                                    state.fireNodes[0].address!.latitude!,
-                                  ),
-                                  double.parse(
-                                    state.fireNodes[0].address!.longitude!,
-                                  ),
-                                ), // center of 't Gooi
-                                radius: 100000,
-                                useRadiusInMeter: true,
-                                color: Colors.red.withOpacity(0.3),
-                                borderColor: Colors.red.withOpacity(0.7),
-                                borderStrokeWidth: 1,
-                              ),
-                            ],
-                          ),
+                          // CircleLayer(
+                          //   circles: [
+                          //     CircleMarker(
+                          //       point: LatLng(
+                          //         double.parse(
+                          //           state.fireNodes[0].latitude!,
+                          //         ),
+                          //         double.parse(
+                          //           state.fireNodes[0].longitude!,
+                          //         ),
+                          //       ), // center of 't Gooi
+                          //       radius: 100000,
+                          //       useRadiusInMeter: true,
+                          //       color: Colors.red.withOpacity(0.3),
+                          //       borderColor: Colors.red.withOpacity(0.7),
+                          //       borderStrokeWidth: 1,
+                          //     ),
+                          //   ],
+                          // ),
                           MarkerLayer(
                             markers: [
                               Marker(
-                                // point: LatLng(35, 38),
                                 point: LatLng(
                                   double.parse(
-                                    state.fireStationCenterDetails.address!
-                                        .latitude!,
+                                    state
+                                        .fireStationCentersDetails[0].latitude!,
                                   ),
                                   double.parse(
-                                    state.fireStationCenterDetails.address!
+                                    state.fireStationCentersDetails[0]
                                         .longitude!,
                                   ),
                                 ),
@@ -193,22 +192,37 @@ class _HomeViewState extends State<HomeView> {
                                   size: 40,
                                 ),
                               ),
-                              Marker(
-                                // point: LatLng(36.3927773, 33.529014),
-                                point: LatLng(
-                                  double.parse(
-                                    state.fireNodes[0].address!.latitude!,
+                              // Marker(
+                              //   // point: LatLng(36.3927773, 33.529014),
+                              //   point: LatLng(
+                              //     double.parse(
+                              //       state.fireNodes[0].latitude!,
+                              //     ),
+                              //     double.parse(
+                              //       state.fireNodes[0].longitude!,
+                              //     ),
+                              //   ),
+                              //   child: const Icon(
+                              //     Icons.speed,
+                              //     color: ColorsManager.primaryColor,
+                              //     size: 40,
+                              //   ),
+                              // ),
+                              ...List.generate(state.fireNodes.length, (index) {
+                                return Marker(
+                                  point: LatLng(
+                                    double.parse(
+                                        state.fireNodes[index].latitude!),
+                                    double.parse(
+                                        state.fireNodes[index].latitude!),
                                   ),
-                                  double.parse(
-                                    state.fireNodes[0].address!.longitude!,
+                                  child: const Icon(
+                                    Icons.speed,
+                                    color: ColorsManager.primaryColor,
+                                    size: 40,
                                   ),
-                                ),
-                                child: const Icon(
-                                  Icons.speed,
-                                  color: ColorsManager.primaryColor,
-                                  size: 40,
-                                ),
-                              ),
+                                );
+                              })
                             ],
                           ),
                         ],
@@ -283,8 +297,7 @@ class _HomeViewState extends State<HomeView> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               FireLocationView(
-                                            fireId: state
-                                                .fireTasks[index].fire!.id!,
+                                            fireTask: state.fireTasks[index],
                                             fireTruckLatLng: fireTruckLatLng,
                                           ),
                                         ),
@@ -333,12 +346,15 @@ class FireAlertItem extends StatelessWidget {
     super.key,
     this.hasStatus = false,
     required this.fireCreatesAt,
-    this.onPressed, this.status,
+    this.onPressed,
+    this.status,
+    this.statusColor,
   });
   final String? status;
   final bool hasStatus;
   final String fireCreatesAt;
   final VoidCallback? onPressed;
+  final Color? statusColor;
 
   @override
   Widget build(BuildContext context) {
@@ -374,11 +390,13 @@ class FireAlertItem extends StatelessWidget {
         ),
         trailing: hasStatus
             ? Container(
-                width: 65,
-                height: 15,
-                decoration: const BoxDecoration(
-                  color: ColorsManager.backgroundGreenColor,
-                  borderRadius: BorderRadius.all(
+                width: 85,
+                height: 25,
+                decoration: BoxDecoration(
+                  color: status == FireStatus.CANCELED.name
+                      ? ColorsManager.primaryColor.withOpacity(0.4)
+                      : ColorsManager.backgroundGreenColor,
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
                 ),
@@ -387,7 +405,9 @@ class FireAlertItem extends StatelessWidget {
                     status ?? "Status",
                     style: StylesManager.interFontFamilyBold(
                       fontSize: 10,
-                      color: ColorsManager.greenColor,
+                      color: status == FireStatus.CANCELED.name
+                          ? ColorsManager.primaryColor
+                          : ColorsManager.greenColor,
                     ),
                   ),
                 ),
@@ -425,7 +445,6 @@ class NoTaskWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Gap(90),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -42,7 +42,7 @@ class FireStationCenterDetailsAndFireNodesBloc
         print(fireNodes);
         emit(
           FireStationCenterSuccess(
-            fireStationCenterDetails: fireStationCenterDetails,
+            fireStationCentersDetails: fireStationCenterDetails,
             fireNodes: fireNodes,
           ),
         );

@@ -3,36 +3,42 @@
 import 'dart:convert';
 
 import 'package:fire_guard_app/src/features/fire_tasks/data/models/address_model.dart';
+import 'package:fire_guard_app/src/features/fire_tasks/data/models/fire_brigade_model.dart';
+import 'package:fire_guard_app/src/features/fire_tasks/data/models/fire_model.dart';
 import 'package:fire_guard_app/src/features/fire_tasks/data/models/status_model.dart';
 
 class FireLocationOrHistoryModel {
-  final ForestModel? forest;
-  final DeviceModel? device;
+  final Fire? fire;
+  final FireBrigade? fireBrigade;
   final int? id;
-  final StatusModel? status;
+  final String? note;
+  final String? status;
   final String? createdAt;
   final String? updatedAt;
   FireLocationOrHistoryModel({
-    this.forest,
-    this.device,
+    this.fire,
+    this.fireBrigade,
     this.id,
+    this.note,
     this.status,
     this.createdAt,
     this.updatedAt,
   });
 
   FireLocationOrHistoryModel copyWith({
-    ForestModel? forest,
-    DeviceModel? device,
+    Fire? fire,
+    FireBrigade? fireBrigade,
     int? id,
-    StatusModel? status,
+    String? note,
+    String? status,
     String? createdAt,
     String? updatedAt,
   }) {
     return FireLocationOrHistoryModel(
-      forest: forest ?? this.forest,
-      device: device ?? this.device,
+      fire: fire ?? this.fire,
+      fireBrigade: fireBrigade ?? this.fireBrigade,
       id: id ?? this.id,
+      note: note ?? this.note,
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -41,10 +47,11 @@ class FireLocationOrHistoryModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'forest': forest?.toMap(),
-      'device': device?.toMap(),
+      'fire': fire?.toMap(),
+      'fireBrigade': fireBrigade?.toMap(),
       'id': id,
-      'status': status?.toMap(),
+      'note': note,
+      'status': status,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };
@@ -52,16 +59,11 @@ class FireLocationOrHistoryModel {
 
   factory FireLocationOrHistoryModel.fromMap(Map<String, dynamic> map) {
     return FireLocationOrHistoryModel(
-      forest: map['forest'] != null
-          ? ForestModel.fromMap(map['forest'] as Map<String, dynamic>)
-          : null,
-      device: map['device'] != null
-          ? DeviceModel.fromMap(map['device'] as Map<String, dynamic>)
-          : null,
+      fire: map['fire'] != null ? Fire.fromMap(map['fire'] as Map<String,dynamic>) : null,
+      fireBrigade: map['fireBrigade'] != null ? FireBrigade.fromMap(map['fireBrigade'] as Map<String,dynamic>) : null,
       id: map['id'] != null ? map['id'] as int : null,
-      status: map['status'] != null
-          ? StatusModel.fromMap(map['status'] as Map<String, dynamic>)
-          : null,
+      note: map['note'] != null ? map['note'] as String : null,
+      status: map['status'] != null ? map['status'] as String : null,
       createdAt: map['createdAt'] != null ? map['createdAt'] as String : null,
       updatedAt: map['updatedAt'] != null ? map['updatedAt'] as String : null,
     );
@@ -69,35 +71,36 @@ class FireLocationOrHistoryModel {
 
   String toJson() => json.encode(toMap());
 
-  factory FireLocationOrHistoryModel.fromJson(String source) =>
-      FireLocationOrHistoryModel.fromMap(
-          json.decode(source) as Map<String, dynamic>);
+  factory FireLocationOrHistoryModel.fromJson(String source) => FireLocationOrHistoryModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'FireLocationModel(forest: $forest, device: $device, id: $id, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'FireLocationOrHistoryModel(fire: $fire, fireBrigade: $fireBrigade, id: $id, note: $note, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
   bool operator ==(covariant FireLocationOrHistoryModel other) {
     if (identical(this, other)) return true;
-
-    return other.forest == forest &&
-        other.device == device &&
-        other.id == id &&
-        other.status == status &&
-        other.createdAt == createdAt &&
-        other.updatedAt == updatedAt;
+  
+    return 
+      other.fire == fire &&
+      other.fireBrigade == fireBrigade &&
+      other.id == id &&
+      other.note == note &&
+      other.status == status &&
+      other.createdAt == createdAt &&
+      other.updatedAt == updatedAt;
   }
 
   @override
   int get hashCode {
-    return forest.hashCode ^
-        device.hashCode ^
-        id.hashCode ^
-        status.hashCode ^
-        createdAt.hashCode ^
-        updatedAt.hashCode;
+    return fire.hashCode ^
+      fireBrigade.hashCode ^
+      id.hashCode ^
+      note.hashCode ^
+      status.hashCode ^
+      createdAt.hashCode ^
+      updatedAt.hashCode;
   }
 }
 

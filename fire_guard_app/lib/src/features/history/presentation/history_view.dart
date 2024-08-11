@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fire_guard_app/core/helper/date_format_helper.dart';
 import 'package:fire_guard_app/core/network/network_connection_info.dart';
 import 'package:fire_guard_app/core/resource/colors_manager.dart';
 import 'package:fire_guard_app/core/resource/images_manager.dart';
@@ -6,6 +7,7 @@ import 'package:fire_guard_app/core/resource/styles_manager.dart';
 import 'package:fire_guard_app/src/features/fire_tasks/data/respository/fire_task_repository.dart';
 import 'package:fire_guard_app/src/features/fire_tasks/data/service/fire_task_service.dart';
 import 'package:fire_guard_app/src/features/fire_tasks/presentation/blocs/fire_tasks_history_bloc/fire_tasks_history_bloc.dart';
+import 'package:fire_guard_app/src/features/fire_tasks/presentation/view/fire_location_view.dart';
 import 'package:fire_guard_app/src/features/fire_tasks/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +30,9 @@ class HistoryView extends StatelessWidget {
             dio: Dio(),
           ),
         ),
-      )..add(GetAllFireTasksHistory()),
+      )..add(
+          GetAllFireTasksHistory(),
+        ),
       child: Scaffold(
         body: Column(
           children: [
@@ -116,10 +120,17 @@ class HistoryView extends StatelessWidget {
                         );
                       },
                       itemBuilder: (context, index) {
-                        return  FireAlertItem(
-                          status: state.fireTasksHistory[index].status!.value,
+                        print('==============test bool============');
+                        print(
+                            state.fireTasksHistory[index].status == 'CANCELED');
+                        print(
+                          state.fireTasksHistory[index],
+                        );
+                        return FireAlertItem(
+                          status: state.fireTasksHistory[index].status!,
                           hasStatus: true,
-                          fireCreatesAt: '24 December 2023',
+                          fireCreatesAt: DateFormatHelper.getFormattedDate(
+                              state.fireTasksHistory[index].createdAt!),
                         );
                       },
                     );

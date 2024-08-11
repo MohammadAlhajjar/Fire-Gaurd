@@ -1,9 +1,10 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:fire_guard_app/core/helper/bloc_helper.dart';
+import 'package:fire_guard_app/src/features/fire_tasks/data/models/sos_request_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fire_guard_app/src/features/fire_tasks/data/respository/fire_task_repository.dart';
 import 'package:meta/meta.dart';
-
-import '../../../../../../core/error/fauilers.dart';
 import '../../../data/models/fire_task_model.dart';
 
 part 'fire_tasks_event.dart';

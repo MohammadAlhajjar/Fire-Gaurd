@@ -9,9 +9,9 @@ import 'package:fire_guard_app/core/service/base_service.dart';
 class FireTaskService extends BaseService {
   FireTaskService({required super.dio});
 
-  Future<List<dynamic>> getAllFireTasks() async {
+  Future<List<dynamic>> getAllFireTasks({String? status}) async {
     response = await dio.get(
-      '$baseUrl/${UrlManager.mobileFireTasksEndpoint}',
+      '$baseUrl/${UrlManager.mobileFireTasksEndpoint}?status=$status',
       // "https://firegard.cupcoding.com/backend/public/api/mobile/fire-brigade/task-fire-brigades",
       options: Options(
         headers: HeadersHepler.getHeader(),
@@ -25,13 +25,16 @@ class FireTaskService extends BaseService {
     }
   }
 
-  Future<List<dynamic>> getAllFireTasksForHistory() async {
+  Future<List<dynamic>> getAllFireTasksForHistory(
+      {required int fireBrigadeId}) async {
+    // TODO : get fireBrigadeID 
     response = await dio.get(
-      '$baseUrl/${UrlManager.mobileFireLocationOrHistoryEndpoint}',
+      '$baseUrl/${UrlManager.mobileFireTasksEndpoint}?fireBrigade=$fireBrigadeId',
       options: Options(
         headers: HeadersHepler.getHeader(),
       ),
     );
+    print('==========================test print====================');
     print(response.data);
     if (response.statusCode == 200) {
       return response.data['pagination']['items'];

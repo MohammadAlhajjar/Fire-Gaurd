@@ -9,7 +9,7 @@ import '../../../../../core/error/fauilers.dart';
 import '../../../../../core/network/network_connection_info.dart';
 
 abstract class FireStationCenterRepo {
-  Future<Either<Failure, FireStationCenterModel>> getFireStationCenterDetails();
+  Future<Either<Failure, List<FireStationCenterModel>>> getFireStationCenterDetails();
 }
 
 class FireStationCenterRepoImpl implements FireStationCenterRepo {
@@ -21,15 +21,20 @@ class FireStationCenterRepoImpl implements FireStationCenterRepo {
   });
 
   @override
-  Future<Either<Failure, FireStationCenterModel>> getFireStationCenterDetails() async {
+  Future<Either<Failure, List<FireStationCenterModel>>>
+      getFireStationCenterDetails() async {
     try {
       if (await internetConnectionInfo.isConnected) {
         try {
           var result =
               await fireStationCenterService.getFireStationCenterDetails();
-          FireStationCenterModel fireStationCenterDetails =
-              FireStationCenterModel.fromMap(result);
-          return Right(fireStationCenterDetails);
+          List<FireStationCenterModel> fireStationCentersDetails = List.generate(
+            result.length,
+            (index) => FireStationCenterModel.fromMap(
+              result[index],
+            ),
+          );
+          return Right(fireStationCentersDetails);
         } on Exception catch (e) {
           print('-------<<Exception: $e>>---------------------------');
           return Left(ServerFailure());

@@ -1,16 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-
-
 import 'fire_brigade_model.dart';
 import 'fire_model.dart';
 
-class FireTask{
+class FireTask {
   final Fire? fire;
   final FireBrigade? fireBrigade;
   final int? id;
   final String? note;
+  final String? status;
   final String? createdAt;
   final String? updatedAt;
   FireTask({
@@ -18,6 +17,7 @@ class FireTask{
     this.fireBrigade,
     this.id,
     this.note,
+    this.status,
     this.createdAt,
     this.updatedAt,
   });
@@ -27,6 +27,7 @@ class FireTask{
     FireBrigade? fireBrigade,
     int? id,
     String? note,
+    String? status,
     String? createdAt,
     String? updatedAt,
   }) {
@@ -35,6 +36,7 @@ class FireTask{
       fireBrigade: fireBrigade ?? this.fireBrigade,
       id: id ?? this.id,
       note: note ?? this.note,
+      status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -46,6 +48,7 @@ class FireTask{
       'fireBrigade': fireBrigade?.toMap(),
       'id': id,
       'note': note,
+      'status': status,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };
@@ -57,6 +60,7 @@ class FireTask{
       fireBrigade: map['fireBrigade'] != null ? FireBrigade.fromMap(map['fireBrigade'] as Map<String,dynamic>) : null,
       id: map['id'] != null ? map['id'] as int : null,
       note: map['note'] != null ? map['note'] as String : null,
+      status: map['status'] != null ? map['status'] as String : null,
       createdAt: map['createdAt'] != null ? map['createdAt'] as String : null,
       updatedAt: map['updatedAt'] != null ? map['updatedAt'] as String : null,
     );
@@ -68,7 +72,7 @@ class FireTask{
 
   @override
   String toString() {
-    return 'Items(fire: $fire, fireBrigade: $fireBrigade, id: $id, note: $note, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'FireTask(fire: $fire, fireBrigade: $fireBrigade, id: $id, note: $note, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -80,6 +84,7 @@ class FireTask{
       other.fireBrigade == fireBrigade &&
       other.id == id &&
       other.note == note &&
+      other.status == status &&
       other.createdAt == createdAt &&
       other.updatedAt == updatedAt;
   }
@@ -90,9 +95,8 @@ class FireTask{
       fireBrigade.hashCode ^
       id.hashCode ^
       note.hashCode ^
+      status.hashCode ^
       createdAt.hashCode ^
       updatedAt.hashCode;
   }
-
-  
 }

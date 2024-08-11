@@ -1,10 +1,12 @@
 part of 'fire_location_bloc.dart';
 
 @immutable
-sealed class FireLocationEvent {}
+sealed class FireEvent {}
 
-final class GetFireLocation extends FireLocationEvent{
+final class GetFireLocation extends FireEvent {
   final int fireId;
 
   GetFireLocation({required this.fireId});
 }
+
+

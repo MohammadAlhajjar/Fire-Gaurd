@@ -9,10 +9,11 @@ final class FireStationCenterDetailsInitial
 final class FireStationCenterLoading extends FireStationCenterDetailsState {}
 
 final class FireStationCenterSuccess extends FireStationCenterDetailsState {
-  final FireStationCenterModel fireStationCenterDetails;
+  final List<FireStationCenterModel> fireStationCentersDetails;
   final List<FireNodeModel> fireNodes;
 
-  FireStationCenterSuccess({required this.fireStationCenterDetails, required this.fireNodes});
+  FireStationCenterSuccess(
+      {required this.fireStationCentersDetails, required this.fireNodes});
 }
 
 final class FireStationCenterDetailsFailure

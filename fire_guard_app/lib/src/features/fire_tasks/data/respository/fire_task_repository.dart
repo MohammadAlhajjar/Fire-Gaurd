@@ -7,6 +7,7 @@ import 'package:fire_guard_app/core/network/network_connection_info.dart';
 import 'package:fire_guard_app/src/features/fire_tasks/data/models/fire_location_model.dart';
 
 import 'package:fire_guard_app/src/features/fire_tasks/data/service/fire_task_service.dart';
+import 'package:fire_guard_app/src/features/fire_tasks/presentation/view/fire_location_view.dart';
 
 import '../models/fire_task_model.dart';
 
@@ -24,12 +25,16 @@ class FireTaskRepoImpl implements FireTaskRepo {
     required this.fireTaskService,
   });
 
+  int fireBrigadeId = 1;
+
   @override
   Future<Either<Failure, List<FireTask>>> getAllFireTasks() async {
     try {
       if (await internetConnectionInfo.isConnected) {
         try {
-          var result = await fireTaskService.getAllFireTasks();
+          var result = await fireTaskService.getAllFireTasks(
+            status: FireStatus.ONFIRE.name,
+          );
 
           List<FireTask> fireTask = List.generate(
             result.length,
@@ -50,13 +55,16 @@ class FireTaskRepoImpl implements FireTaskRepo {
       return Left(ServerFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, List<FireLocationOrHistoryModel>>> getAllFireTasksForHistory() async{
+  Future<Either<Failure, List<FireLocationOrHistoryModel>>>
+      getAllFireTasksForHistory() async {
     try {
       if (await internetConnectionInfo.isConnected) {
         try {
-          var result = await fireTaskService.getAllFireTasksForHistory();
+          var result = await fireTaskService.getAllFireTasksForHistory(
+            fireBrigadeId: fireBrigadeId,
+          );
 
           List<FireLocationOrHistoryModel> fireTasks = List.generate(
             result.length,

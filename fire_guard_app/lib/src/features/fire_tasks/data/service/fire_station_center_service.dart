@@ -8,18 +8,18 @@ import '../../../../../core/service/base_service.dart';
 class FireStationCenterService extends BaseService {
   FireStationCenterService({required super.dio});
 
-  Future<Map<String, dynamic>> getFireStationCenterDetails() async {
+  Future<List<dynamic>> getFireStationCenterDetails() async {
     response = await dio.get(
-      '$baseUrl/${UrlManager.mobileFireStationCenterEndpoint}',
+      '$baseUrl/${UrlManager.mobileFireStationCentersEndpoint}',
       // "https://firegard.cupcoding.com/backend/public/api/mobile/fire-brigade/task-fire-brigades",
       options: Options(
         headers: HeadersHepler.getHeader(),
       ),
     );
-    print(response.data['data']);
+    print(response.data['pagination']['items']);
     if (response.statusCode == 200) {
       // print(response.data['data']);
-      return response.data['data'];
+      return response.data['pagination']['items'];
     } else {
       throw ServerException();
     }

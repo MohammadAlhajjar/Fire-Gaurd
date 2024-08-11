@@ -6,8 +6,8 @@ class UrlManager {
       'mobile/fire-brigade/task-fire-brigades';
   static const String mobileProfileEndpoint = 'mobile/fire-brigades/profile';
 
-  static const String mobileFireStationCenterEndpoint =
-      'mobile/fire-brigade/centers/1';
+  static const String mobileFireStationCentersEndpoint =
+      'mobile/fire-brigade/centers';
   static const String mobileFireNodesEndpoint = 'mobile/fire-brigade/devices';
   static const String mobileFireLocationOrHistoryEndpoint =
       'mobile/fire-brigade/fires';

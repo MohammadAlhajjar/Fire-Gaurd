@@ -1,9 +1,7 @@
 import 'package:fire_guard_app/core/resource/constants_manager.dart';
 import 'package:fire_guard_app/core/widgets/app_bottom_navigation_bar.dart';
 import 'package:fire_guard_app/main.dart';
-import 'package:fire_guard_app/src/features/fire_tasks/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/resource/colors_manager.dart';
 import '../../../../../core/widgets/app_logo_and_name_widget.dart';

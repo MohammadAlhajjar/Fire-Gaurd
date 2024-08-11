@@ -10,15 +10,14 @@ class FireNodeService extends BaseService {
 
   Future<List<dynamic>> getFireNodes() async {
     response = await dio.get(
-      '$baseUrl/${UrlManager.mobileFireNodesEndpoint}',
-      // "https://firegard.cupcoding.com/backend/public/api/mobile/fire-brigade/task-fire-brigades",
+      // '$baseUrl/${UrlManager.mobileFireNodesEndpoint}',
+      'https://firegard.cupcoding.com/backend/public/api/mobile/fire-brigade/devices',
       options: Options(
         headers: HeadersHepler.getHeader(),
       ),
     );
-
+    print(response.data['pagination']['items']);
     if (response.statusCode == 200) {
-      // print(response.data['pagination']['items']);
       return response.data['pagination']['items'];
     } else {
       throw ServerException();

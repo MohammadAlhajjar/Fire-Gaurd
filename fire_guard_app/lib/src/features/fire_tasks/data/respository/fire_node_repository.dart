@@ -25,12 +25,20 @@ class FireNodeRepoImpl implements FireNodeRepo {
       if (await internetConnectionInfo.isConnected) {
         try {
           var result = await fireNodeService.getFireNodes();
-          List<FireNodeModel> fireNodes = List.generate(
-            result.length,
-            (index) => FireNodeModel.fromMap(
-              result[index],
-            ),
-          );
+          print("===========================");
+          print(result);
+          // List<FireNodeModel> fireNodes = List.generate(
+          //   result.length,
+          //   (index) => FireNodeModel.fromMap(
+          //     result[index],
+          //   ),
+          // );
+          print('--------------------------------------------');
+          List<FireNodeModel> fireNodes = result.map((fireNode) {
+            return FireNodeModel.fromMap(fireNode);
+          }).toList();
+
+          print(fireNodes);
           return Right(fireNodes);
         } on Exception catch (e) {
           print('-------<<Exception: $e>>---------------------------');
