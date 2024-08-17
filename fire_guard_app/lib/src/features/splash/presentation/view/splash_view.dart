@@ -17,6 +17,7 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
+    sharedPreferences.clear();
     Future.delayed(
       const Duration(seconds: 3),
       () {

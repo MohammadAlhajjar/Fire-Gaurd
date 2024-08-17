@@ -1,39 +1,45 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'address_model.dart';
-
 class ForestModel {
   final int? id;
   final String? name;
   final String? description;
+  final String? nameAddress;
+  final String? latitude;
+  final String? longitude;
   final String? createdAt;
   final String? updatedAt;
-  final AddressModel? address;
   ForestModel({
     this.id,
     this.name,
     this.description,
+    this.nameAddress,
+    this.latitude,
+    this.longitude,
     this.createdAt,
     this.updatedAt,
-    this.address,
   });
 
   ForestModel copyWith({
     int? id,
     String? name,
     String? description,
+    String? nameAddress,
+    String? latitude,
+    String? longitude,
     String? createdAt,
     String? updatedAt,
-    AddressModel? address,
   }) {
     return ForestModel(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      nameAddress: nameAddress ?? this.nameAddress,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      address: address ?? this.address,
     );
   }
 
@@ -42,9 +48,11 @@ class ForestModel {
       'id': id,
       'name': name,
       'description': description,
+      'nameAddress': nameAddress,
+      'latitude': latitude,
+      'longitude': longitude,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
-      'address': address?.toMap(),
     };
   }
 
@@ -53,9 +61,11 @@ class ForestModel {
       id: map['id'] != null ? map['id'] as int : null,
       name: map['name'] != null ? map['name'] as String : null,
       description: map['description'] != null ? map['description'] as String : null,
+      nameAddress: map['nameAddress'] != null ? map['nameAddress'] as String : null,
+      latitude: map['latitude'] != null ? map['latitude'] as String : null,
+      longitude: map['longitude'] != null ? map['longitude'] as String : null,
       createdAt: map['createdAt'] != null ? map['createdAt'] as String : null,
       updatedAt: map['updatedAt'] != null ? map['updatedAt'] as String : null,
-      address: map['address'] != null ? AddressModel.fromMap(map['address'] as Map<String,dynamic>) : null,
     );
   }
 
@@ -65,7 +75,7 @@ class ForestModel {
 
   @override
   String toString() {
-    return 'ForestModel(id: $id, name: $name, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, address: $address)';
+    return 'ForestModel(id: $id, name: $name, description: $description, nameAddress: $nameAddress, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -76,9 +86,11 @@ class ForestModel {
       other.id == id &&
       other.name == name &&
       other.description == description &&
+      other.nameAddress == nameAddress &&
+      other.latitude == latitude &&
+      other.longitude == longitude &&
       other.createdAt == createdAt &&
-      other.updatedAt == updatedAt &&
-      other.address == address;
+      other.updatedAt == updatedAt;
   }
 
   @override
@@ -86,8 +98,10 @@ class ForestModel {
     return id.hashCode ^
       name.hashCode ^
       description.hashCode ^
+      nameAddress.hashCode ^
+      latitude.hashCode ^
+      longitude.hashCode ^
       createdAt.hashCode ^
-      updatedAt.hashCode ^
-      address.hashCode;
+      updatedAt.hashCode;
   }
 }

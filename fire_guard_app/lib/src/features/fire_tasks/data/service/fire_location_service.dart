@@ -12,15 +12,34 @@ class FireLocationService extends BaseService {
     try {
       response = await dio.get(
         '$baseUrl/${UrlManager.mobileFireTasksEndpoint}',
-        // "https://firegard.cupcoding.com/backend/public/api/mobile/fire-brigade/fires",
+       
         options: Options(
           headers: HeadersHepler.getHeader(),
         ),
       );
       print(response.data['pagination']['items']);
       if (response.statusCode == 200) {
-        // print(response.data['data']);
         return response.data['pagination']['items'];
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      print(e);
+      throw ServerException();
+    }
+  }
+  Future<dynamic> getFireLocationById({required int taskFireId}) async {
+    try {
+      response = await dio.get(
+        '$baseUrl/${UrlManager.mobileFireTasksEndpoint}/$taskFireId',
+       
+        options: Options(
+          headers: HeadersHepler.getHeader(),
+        ),
+      );
+      print(response.data['data']);
+      if (response.statusCode == 200) {
+        return response.data['data'];
       } else {
         throw ServerException();
       }

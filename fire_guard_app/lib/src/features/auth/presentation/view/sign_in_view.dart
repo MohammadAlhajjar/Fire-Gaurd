@@ -117,7 +117,7 @@ class _SignInViewState extends State<SignInView> {
                 BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {
                     if (state is SignInSuccessState) {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const AppBottomNavigationBar(),

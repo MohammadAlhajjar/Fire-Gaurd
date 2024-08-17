@@ -18,3 +18,17 @@ class FireBrigadeError extends FireBrigadeState {
 
   FireBrigadeError({required this.errorMessage});
 }
+
+class FireBrigadeActionSuccesss extends FireBrigadeState {
+  final String actionMessage;
+
+  FireBrigadeActionSuccesss({required this.actionMessage});
+}
+
+final class FireBrigadeActionLoading extends FireBrigadeState {}
+
+final class FireBrigadeActionError extends FireBrigadeState {
+  final String errorMessage;
+
+  FireBrigadeActionError({required this.errorMessage});
+}

@@ -6,9 +6,9 @@ sealed class FireLocationState {}
 final class FireLocationInitial extends FireLocationState {}
 
 final class FireLocationSuccess extends FireLocationState {
-  final List<FireLocationOrHistoryModel> fireLocationsModel;
+  final FireLocationOrHistoryModel fireLocationModel;
 
-  FireLocationSuccess({required this.fireLocationsModel});
+  FireLocationSuccess({required this.fireLocationModel});
 }
 
 final class FireLocationLoading extends FireLocationState {}
@@ -18,5 +18,3 @@ final class FireLocationFailure extends FireLocationState {
 
   FireLocationFailure({required this.errorMessage});
 }
-
-

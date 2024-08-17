@@ -18,3 +18,17 @@ class ForestError extends ForestState {
 
   ForestError({required this.errorMessage});
 }
+
+class ForestActionSuccess extends ForestState {
+  final String actionMessage;
+
+  ForestActionSuccess({required this.actionMessage});
+}
+
+class ForestActionLoading extends ForestState {}
+
+class ForestActionError extends ForestState {
+  final String errorMessage;
+
+  ForestActionError({required this.errorMessage});
+}

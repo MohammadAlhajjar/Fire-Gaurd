@@ -18,3 +18,13 @@ class CarError extends CarState {
 
   CarError({required this.errorMessage});
 }
+
+class CarActionSuccess extends CarState {
+  final String actionMessage;
+
+  CarActionSuccess({required this.actionMessage});
+}
+
+class CarActionLoading extends CarState {}
+
+class CarActionError extends CarState {}

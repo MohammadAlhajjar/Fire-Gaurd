@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:fire_gurad_dashboard/models/fire_model.dart';
+import '../../models/fire_model.dart';
 
 import '../../services/fires_service.dart';
 
@@ -11,7 +11,6 @@ class FiresBloc extends Bloc<FiresEvent, FiresState> {
     on<FetchFiresEvent>(
       (event, emit) async {
         emit(FiresLoading());
-
         try {
           final fires = await fetchFireData();
           emit(

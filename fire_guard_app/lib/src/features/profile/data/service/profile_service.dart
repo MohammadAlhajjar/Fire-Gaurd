@@ -10,7 +10,6 @@ class ProfileService extends BaseService {
   Future<Map<String, dynamic>> getFireBrigadeProfile() async {
     response = await dio.get(
       '$baseUrl/${UrlManager.mobileProfileEndpoint}',
-      // 'https://firegard.cupcoding.com/backend/public/api/mobile/fire-brigades/profile',
       options: Options(
         headers: HeadersHepler.getHeader(),
       ),

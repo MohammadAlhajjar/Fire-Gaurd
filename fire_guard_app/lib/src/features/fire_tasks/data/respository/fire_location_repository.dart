@@ -9,6 +9,8 @@ import '../../../../../core/network/network_connection_info.dart';
 
 abstract class FireLocationRepo {
   Future<Either<Failure, List<FireLocationOrHistoryModel>>> getFireLocation();
+  Future<Either<Failure, FireLocationOrHistoryModel>> getFireLocationById(
+      {required int taskFireId});
 }
 
 class FireLocationRepoImpl implements FireLocationRepo {
@@ -34,6 +36,32 @@ class FireLocationRepoImpl implements FireLocationRepo {
           );
 
           return Right(fireLocations);
+        } on Exception catch (e) {
+          print('-------<<Exception: $e>>---------------------------');
+          return Left(ServerFailure());
+        }
+      } else {
+        return Left(OfflineFailure());
+      }
+    } on Exception catch (e) {
+      print('-------<<Exception: $e>>---------------------------');
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, FireLocationOrHistoryModel>> getFireLocationById(
+      {required int taskFireId}) async {
+    try {
+      if (await internetConnectionInfo.isConnected) {
+        try {
+          var result = await fireLocationService.getFireLocationById(
+              taskFireId: taskFireId);
+
+          FireLocationOrHistoryModel fireLocation =
+              FireLocationOrHistoryModel.fromMap(result);
+
+          return Right(fireLocation);
         } on Exception catch (e) {
           print('-------<<Exception: $e>>---------------------------');
           return Left(ServerFailure());

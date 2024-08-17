@@ -1,5 +1,6 @@
-import 'package:fire_gurad_dashboard/core/colors.dart';
-import 'package:fire_gurad_dashboard/pages/dash_board_page.dart';
+import '../core/colors.dart';
+import '../pages/dash_board_page.dart';
+import 'loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,9 +36,7 @@ class LoginForm extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is LoginLoading) {
-          return const CircularProgressIndicator(
-            color: primaryColor,
-          );
+          return const LoadingWidget();
         }
         return Column(
           children: [

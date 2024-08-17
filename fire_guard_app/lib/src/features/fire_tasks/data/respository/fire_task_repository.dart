@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
-import 'package:fire_guard_app/core/error/exceptions.dart';
+import 'package:dio/dio.dart';
 
 import 'package:fire_guard_app/core/error/fauilers.dart';
 import 'package:fire_guard_app/core/network/network_connection_info.dart';
@@ -9,6 +9,7 @@ import 'package:fire_guard_app/src/features/fire_tasks/data/models/fire_location
 import 'package:fire_guard_app/src/features/fire_tasks/data/service/fire_task_service.dart';
 import 'package:fire_guard_app/src/features/fire_tasks/presentation/view/fire_location_view.dart';
 
+import '../../../../../core/helper/headers_helper.dart';
 import '../models/fire_task_model.dart';
 
 abstract class FireTaskRepo {
@@ -32,10 +33,16 @@ class FireTaskRepoImpl implements FireTaskRepo {
     try {
       if (await internetConnectionInfo.isConnected) {
         try {
-          var result = await fireTaskService.getAllFireTasks(
-            status: FireStatus.ONFIRE.name,
+          final response = await Dio().get(
+            'https://firegard.cupcoding.com/backend/public/api/mobile/fire-brigades/profile',
+            options: Options(
+              headers: HeadersHepler.getHeader(),
+            ),
           );
-
+          print(response.data['data']['fireBrigades']);
+          var result = await fireTaskService.getAllFireTasks(
+              status: FireStatus.ONFIRE.name,
+              fireBrigadeId: response.data['data']['fireBrigades']['id']);
           List<FireTask> fireTask = List.generate(
             result.length,
             (index) => FireTask.fromMap(
@@ -62,8 +69,15 @@ class FireTaskRepoImpl implements FireTaskRepo {
     try {
       if (await internetConnectionInfo.isConnected) {
         try {
+          final response = await Dio().get(
+            'https://firegard.cupcoding.com/backend/public/api/mobile/fire-brigades/profile',
+            options: Options(
+              headers: HeadersHepler.getHeader(),
+            ),
+          );
+          print(response.data['data']['fireBrigades']);
           var result = await fireTaskService.getAllFireTasksForHistory(
-            fireBrigadeId: fireBrigadeId,
+            fireBrigadeId: response.data['data']['fireBrigades']['id'],
           );
 
           List<FireLocationOrHistoryModel> fireTasks = List.generate(

@@ -17,7 +17,8 @@ class FireLocationBloc extends Bloc<FireEvent, FireLocationState> {
   }) : super(FireLocationInitial()) {
     on<GetFireLocation>((event, emit) async {
       emit(FireLocationLoading());
-      var failureOrFireLocation = await fireLocationRepo.getFireLocation();
+      var failureOrFireLocation =
+          await fireLocationRepo.getFireLocationById(taskFireId: event.fireId);
 
       failureOrFireLocation.fold((failure) {
         emit(
@@ -27,10 +28,10 @@ class FireLocationBloc extends Bloc<FireEvent, FireLocationState> {
             ),
           ),
         );
-      }, (fireLocations) {
+      }, (fireLocation) {
         emit(
           FireLocationSuccess(
-            fireLocationsModel: fireLocations,
+            fireLocationModel: fireLocation,
           ),
         );
       });

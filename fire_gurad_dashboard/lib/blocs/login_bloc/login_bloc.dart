@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:fire_gurad_dashboard/main.dart';
+import '../../main.dart';
 import 'package:meta/meta.dart';
 
 import '../../services/login_service.dart';
@@ -18,7 +18,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (response.statusCode == 200) {
           final data = json.decode(response.body);
           if (data['token'] != null && data['refreshToken'] != null) {
-            sharedPreferences.setString('token', data['token']);
+            sharedPreferences.setString(
+              'token',
+              data['token'],
+            );
             emit(LoginSuccess());
           } else {
             emit(

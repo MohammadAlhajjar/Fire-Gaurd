@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:fire_gurad_dashboard/main.dart';
-import 'package:fire_gurad_dashboard/models/fire_model.dart';
+import '../main.dart';
+import '../models/fire_model.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<FireModel>> fetchFireData() async {

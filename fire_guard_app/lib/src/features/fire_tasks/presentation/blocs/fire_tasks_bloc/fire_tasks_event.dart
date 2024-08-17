@@ -4,5 +4,5 @@ part of 'fire_tasks_bloc.dart';
 sealed class FireTasksEvent {}
 
 final class GetAllFireTasks extends FireTasksEvent {
-
+  
 }

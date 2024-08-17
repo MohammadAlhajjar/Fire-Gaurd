@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:fire_gurad_dashboard/main.dart';
-import 'package:fire_gurad_dashboard/models/device_value_model.dart';
+import '../../main.dart';
+import '../../models/device_value_model.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 

@@ -18,3 +18,17 @@ class DeviceError extends DeviceState {
 
   DeviceError({required this.errorMessage});
 }
+
+class DeviceActionSuccess extends DeviceState {
+  final String actionMessage;
+
+  DeviceActionSuccess({required this.actionMessage});
+}
+
+class DeviceActionLoading extends DeviceState {}
+
+class DeviceActionError extends DeviceState {
+  final String errorMessage;
+
+  DeviceActionError({required this.errorMessage});
+}

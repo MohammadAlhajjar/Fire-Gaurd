@@ -21,6 +21,7 @@ import 'package:gap/gap.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../../../core/helper/headers_helper.dart';
 import '../../../../../core/resource/constants_manager.dart';
 import '../blocs/fire_tasks_bloc/fire_tasks_bloc.dart';
 
@@ -154,25 +155,6 @@ class _HomeViewState extends State<HomeView> {
                             userAgentPackageName:
                                 ConstantsManager.userAgentPackageName,
                           ),
-                          // CircleLayer(
-                          //   circles: [
-                          //     CircleMarker(
-                          //       point: LatLng(
-                          //         double.parse(
-                          //           state.fireNodes[0].latitude!,
-                          //         ),
-                          //         double.parse(
-                          //           state.fireNodes[0].longitude!,
-                          //         ),
-                          //       ), // center of 't Gooi
-                          //       radius: 100000,
-                          //       useRadiusInMeter: true,
-                          //       color: Colors.red.withOpacity(0.3),
-                          //       borderColor: Colors.red.withOpacity(0.7),
-                          //       borderStrokeWidth: 1,
-                          //     ),
-                          //   ],
-                          // ),
                           MarkerLayer(
                             markers: [
                               Marker(
@@ -192,22 +174,6 @@ class _HomeViewState extends State<HomeView> {
                                   size: 40,
                                 ),
                               ),
-                              // Marker(
-                              //   // point: LatLng(36.3927773, 33.529014),
-                              //   point: LatLng(
-                              //     double.parse(
-                              //       state.fireNodes[0].latitude!,
-                              //     ),
-                              //     double.parse(
-                              //       state.fireNodes[0].longitude!,
-                              //     ),
-                              //   ),
-                              //   child: const Icon(
-                              //     Icons.speed,
-                              //     color: ColorsManager.primaryColor,
-                              //     size: 40,
-                              //   ),
-                              // ),
                               ...List.generate(state.fireNodes.length, (index) {
                                 return Marker(
                                   point: LatLng(
@@ -247,12 +213,6 @@ class _HomeViewState extends State<HomeView> {
                   },
                 ),
               ),
-              // Image.asset(
-              //   height: screenHeight / 2.14,
-              //   width: double.infinity,
-              //   ImagesManager.mapImage,
-              //   fit: BoxFit.fitWidth,
-              // ),
               Container(
                 height: screenHeight / 3.5,
                 decoration: const BoxDecoration(
@@ -463,3 +423,5 @@ class NoTaskWidget extends StatelessWidget {
     );
   }
 }
+
+

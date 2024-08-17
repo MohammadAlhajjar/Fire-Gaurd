@@ -1,5 +1,7 @@
-import 'package:fire_gurad_dashboard/core/colors.dart';
-import 'package:fire_gurad_dashboard/models/device_value_model.dart';
+import '../core/helper/date_format_helper.dart';
+import '../models/device_value_model.dart';
+import '../widgets/error_widget.dart';
+import '../widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -23,9 +25,7 @@ class DeviceValuesPage extends StatelessWidget {
           builder: (context, state) {
             if (state is DeviceValuesLoading) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: primaryColor,
-                ),
+                child: LoadingWidget(),
               );
             } else if (state is DeviceValuesSuccess) {
               return PlutoGrid(
@@ -44,7 +44,9 @@ class DeviceValuesPage extends StatelessWidget {
                 ),
               );
             } else if (state is DeviceValuesError) {
-              return Center(child: Text('Error: ${state.errorMessage}'));
+              return ErrorMessageWidget(
+                errorMessage: state.errorMessage,
+              );
             } else {
               return const Center(child: Text('No data available'));
             }
@@ -74,17 +76,6 @@ List<PlutoColumn> _buildColumns() {
       title: 'Device Name',
       field: 'Device Name',
       type: PlutoColumnType.text(),
-      renderer: (rendererContext) {
-        return GestureDetector(
-          onTap: () {},
-          child: Text(
-            rendererContext.cell.value,
-            style: const TextStyle(
-              color: primaryColor,
-            ),
-          ),
-        );
-      },
     ),
     PlutoColumn(
       enableColumnDrag: false,
@@ -144,7 +135,9 @@ List<PlutoRow> _buildRows(List<DeviceValueModel> deviceValues) {
         'Temperature': PlutoCell(value: deviceValue.valueHeat),
         'Humidity': PlutoCell(value: deviceValue.valueMoisture),
         'Gas': PlutoCell(value: deviceValue.valueGas),
-        'Read Time': PlutoCell(value: deviceValue.date),
+        'Read Time': PlutoCell(
+          value: DateFormatHelper.getFormattedDate(date: deviceValue.date!),
+        ),
       },
     );
   }).toList();

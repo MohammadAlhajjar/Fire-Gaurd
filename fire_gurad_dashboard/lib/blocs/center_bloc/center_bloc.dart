@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:fire_gurad_dashboard/main.dart';
-import 'package:fire_gurad_dashboard/models/center_model.dart';
+import 'package:dio/dio.dart';
+import '../../main.dart';
+import '../../models/center_model.dart';
+import '../../models/create_center_model.dart';
 import 'package:meta/meta.dart';
 
 import 'package:http/http.dart' as http;
@@ -39,6 +41,93 @@ class CenterBloc extends Bloc<CenterEvent, CenterState> {
           emit(
             CenterError(
               errorMessage: 'Failed to load centers',
+            ),
+          );
+        }
+      } catch (e) {
+        print(e);
+        emit(CenterError(errorMessage: e.toString()));
+      }
+    });
+    on<CreateCenter>((event, emit) async {
+      emit(CenterActionLoading());
+      try {
+        final response = await Dio().post(
+          'https://firegard.cupcoding.com/backend/public/api/admin/centers',
+          data: event.createCenterModel.toMap(),
+          options: Options(
+            headers: {
+              'Authorization':
+                  'Bearer ${sharedPreferences.getString('token')}', // Replace with your token
+            },
+          ),
+        );
+
+        if (response.statusCode == 201) {
+          emit(
+            CenterActionSuccess(actionMessage: 'Center Added Successfuly'),
+          );
+        } else {
+          emit(
+            CenterError(
+              errorMessage: 'Failed to Add center',
+            ),
+          );
+        }
+      } catch (e) {
+        emit(CenterError(errorMessage: e.toString()));
+      }
+    });
+    on<UpdateCenter>((event, emit) async {
+      emit(CenterActionLoading());
+      try {
+        final response = await Dio().put(
+          'https://firegard.cupcoding.com/backend/public/api/admin/centers/${event.updateCenterId}',
+          data: event.updateCenterModel.toMap(),
+          options: Options(
+            headers: {
+              'Authorization':
+                  'Bearer ${sharedPreferences.getString('token')}', // Replace with your token
+            },
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          emit(
+            CenterActionSuccess(actionMessage: 'Center Updated Successfuly'),
+          );
+        } else {
+          emit(
+            CenterError(
+              errorMessage: 'Failed to Update Center',
+            ),
+          );
+        }
+      } catch (e) {
+        emit(CenterError(errorMessage: e.toString()));
+      }
+    });
+    on<DeleteCenter>((event, emit) async {
+      emit(CenterActionLoading());
+      try {
+        final response = await Dio().delete(
+          'https://firegard.cupcoding.com/backend/public/api/admin/centers/${event.deleteCenterId}',
+          options: Options(
+            headers: {
+              'Authorization':
+                  'Bearer ${sharedPreferences.getString('token')}', // Replace with your token
+            },
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          emit(
+            CenterActionSuccess(actionMessage: 'Center Deleted Successfuly'),
+          );
+        } else {
+          emit(
+            CenterError(
+              errorMessage: 'Failed to Delete center',
             ),
           );
         }
