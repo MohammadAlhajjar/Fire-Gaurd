@@ -175,7 +175,8 @@ class _FireGridPageState extends State<FireGridPage> {
                           return Builder(builder: (context) {
                             return BlocProvider.value(
                               value: BlocProvider.of<TaskFireBrigadesBloc>(
-                                  outerContext),
+                                outerContext,
+                              ),
                               child:
                                   StatefulBuilder(builder: (context, setState) {
                                 return Dialog(
@@ -243,16 +244,6 @@ class _FireGridPageState extends State<FireGridPage> {
                                                   ),
                                                 );
                                               }),
-                                              // items: const [
-                                              //   DropdownMenuItem(
-                                              //     value: 1,
-                                              //     child: Text('Al-Qadmous Brigade'),
-                                              //   ),
-                                              //   DropdownMenuItem(
-                                              //     value: 2,
-                                              //     child: Text('Safita Fire Brigade'),
-                                              //   ),
-                                              // ],
                                               onChanged: (fireBrigadeId) {
                                                 selectedFireBrigadeId =
                                                     fireBrigadeId!;

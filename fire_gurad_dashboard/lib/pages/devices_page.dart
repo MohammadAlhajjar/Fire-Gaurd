@@ -115,6 +115,7 @@ class _DevicesPageState extends State<DevicesPage> {
   }
 
   Future<dynamic> showDialogForCreateDevice(BuildContext outerContext) {
+    pickedLocationLatLngForDevice = LatLng(0, 0);
     return showDialog(
       context: context,
       builder: (context) {
@@ -236,11 +237,6 @@ class _DevicesPageState extends State<DevicesPage> {
                               controller: deviceAddressDetails,
                               cursorColor: primaryColor,
                               decoration: InputDecoration(
-                                // labelText: 'Task Note',
-                                // labelStyle: const TextStyle(
-                                //   fontSize: 16,
-                                //   color: primaryColor,
-                                // ),
                                 focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: primaryColor,
@@ -300,20 +296,6 @@ class _DevicesPageState extends State<DevicesPage> {
                                         ),
                                       );
                                     }),
-                                    // items: const [
-                                    //   DropdownMenuItem(
-                                    //     value: '1',
-                                    //     child: Text('Forest 1'),
-                                    //   ),
-                                    //   DropdownMenuItem(
-                                    //     value: '2',
-                                    //     child: Text('Forest 2'),
-                                    //   ),
-                                    //   DropdownMenuItem(
-                                    //     value: '3',
-                                    //     child: Text('Forest 3'),
-                                    //   ),
-                                    // ],
                                     onChanged: (forest) {
                                       setState(() {
                                         selectedForest = forest!;

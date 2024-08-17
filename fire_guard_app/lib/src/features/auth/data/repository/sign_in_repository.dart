@@ -28,6 +28,7 @@ class SignInRepoImpl implements SignInRepo {
   Future<Either<Failure, Unit>> signIn(SignInModel signInModel) async {
     try {
       if (await internetConnectionInfo.isConnected) {
+        print('==============================');
         var signInResponse = await signInService.signIn(signInModel);
         try {
           sharedPreferences.setString(

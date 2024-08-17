@@ -130,6 +130,7 @@ class _CentersPageState extends State<CentersPage> {
   }
 
   Future<dynamic> showDialogForCreateCenter(BuildContext outerContext) {
+    pickedLocationLatLngForCenter = LatLng(0, 0);
     return showDialog(
       context: context,
       builder: (context) {
@@ -951,7 +952,7 @@ List<PlutoColumn> _buildColumns(BuildContext outerContext) {
                                                           .toString(),
                                                   longitude:
                                                       pickedLocationLatLngForCenter!
-                                                          .latitude
+                                                          .longitude
                                                           .toString(),
                                                   nameAddress:
                                                       centerAddressdetails

@@ -10,19 +10,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SignInService extends BaseService {
   SignInService({required super.dio});
 
-  Future<Map<String, dynamic>> signIn(SignInModel signInModel) async {
+  Future<dynamic> signIn(SignInModel signInModel) async {
     try {
       response = await dio.post(
         "$baseUrl/${UrlManager.mobileLoginEndpoint}",
         data: signInModel.toMap(),
       );
       print(response.data);
+      print(response.statusCode);
       if (response.statusCode == 200) {
-        return response.data as Map<String, dynamic>;
+        return response.data;
       } else {
         throw ServerException();
       }
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       print(e);
       throw ServerException();
     }

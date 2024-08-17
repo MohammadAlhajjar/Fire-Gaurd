@@ -42,6 +42,7 @@ class _ForestsPageState extends State<ForestsPage> {
             padding: const EdgeInsets.only(right: 10),
             child: AppButton(
               onPressed: () {
+                pickedLocationLatLngForForest = LatLng(0, 0);
                 showDialogForCreateCar(context);
               },
               title: 'Add Forest',

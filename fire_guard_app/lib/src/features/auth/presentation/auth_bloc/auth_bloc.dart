@@ -17,9 +17,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }) : super(AuthInitial()) {
     on<SignInEvent>((event, emit) async {
       emit(SignInLoadingState());
+      print('===========================');
       var result = await signInRepo.signIn(event.signInModel);
 
       result.fold((failure) {
+        print(failure);
         emit(
           SignInFailureState(
             errorMessage: FailureHelper.mapFailureToMessage(failure),
@@ -31,4 +33,3 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
   }
 }
-

@@ -9,8 +9,7 @@ void main() async {
   runApp(const FireGuardDashBoard());
 }
 
-void setWindowTitle(String s) {
-}
+void setWindowTitle(String s) {}
 
 class FireGuardDashBoard extends StatelessWidget {
   const FireGuardDashBoard({super.key});
@@ -18,6 +17,7 @@ class FireGuardDashBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'FireGaurd',
       debugShowCheckedModeBanner: false,
       home: sharedPreferences.getString('token') != null
           ? const DashboardPage()

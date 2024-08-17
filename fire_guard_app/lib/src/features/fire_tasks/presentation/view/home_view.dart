@@ -137,7 +137,6 @@ class _HomeViewState extends State<HomeView> {
 
                       return FlutterMap(
                         options: MapOptions(
-                          // initialCenter: LatLng(35, 38),
                           initialCenter: LatLng(
                             double.parse(
                               state.fireStationCentersDetails[0].latitude!,
@@ -146,8 +145,7 @@ class _HomeViewState extends State<HomeView> {
                               state.fireStationCentersDetails[0].longitude!,
                             ),
                           ),
-
-                          initialZoom: 6,
+                          initialZoom: 10,
                         ),
                         children: [
                           TileLayer(
@@ -423,5 +421,3 @@ class NoTaskWidget extends StatelessWidget {
     );
   }
 }
-
-

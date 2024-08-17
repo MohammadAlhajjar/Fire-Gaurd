@@ -121,7 +121,7 @@ class _FireLocationViewState extends State<FireLocationView> {
                           FlutterMap(
                             options: MapOptions(
                               initialCenter: widget.fireTruckLatLng,
-                              initialZoom: 5.5,
+                              initialZoom: 12,
                             ),
                             children: [
                               TileLayer(

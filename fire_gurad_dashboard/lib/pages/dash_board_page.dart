@@ -139,7 +139,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     separatorBuilder: (context, index) {
                       if (pages.length - 2 == index) {
                         return const SizedBox(
-                          height: 140,
+                          height: 70,
                         );
                       }
                       return const SizedBox(

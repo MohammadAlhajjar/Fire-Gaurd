@@ -2,11 +2,12 @@
 
 import 'dart:convert';
 
-import 'package:fire_gurad_dashboard/models/center_model.dart';
-import 'package:fire_gurad_dashboard/models/device_model.dart';
-import 'package:fire_gurad_dashboard/models/fire_model.dart';
-import 'package:fire_gurad_dashboard/models/forest_model.dart';
 import 'package:flutter/foundation.dart';
+
+import 'center_model.dart';
+import 'device_model.dart';
+import 'fire_model.dart';
+import 'forest_model.dart';
 
 class CollectionSystemModel {
   final List<CenterModel?>? centers;

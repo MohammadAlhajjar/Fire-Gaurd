@@ -5,6 +5,6 @@ class StringsManager {
   static const String usernameText = 'Username';
   static const String enterYourUsernameText = 'Enter your username';
   static const String passwordText = 'Password';
-  static const String enterYourPasswordText = 'Enter your username';
+  static const String enterYourPasswordText = 'Enter your Password';
   static const String forgotPasswordText = 'Forgot password?';
 }

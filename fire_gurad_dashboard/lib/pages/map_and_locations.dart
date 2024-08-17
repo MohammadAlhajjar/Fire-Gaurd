@@ -1,17 +1,17 @@
 // ignore_for_file: constant_identifier_names
-
-import 'package:fire_gurad_dashboard/blocs/collection_bloc/collection_bloc.dart';
-import 'package:fire_gurad_dashboard/core/colors.dart';
-import 'package:fire_gurad_dashboard/models/center_model.dart';
-import 'package:fire_gurad_dashboard/models/device_model.dart';
-import 'package:fire_gurad_dashboard/models/forest_model.dart';
-import 'package:fire_gurad_dashboard/widgets/error_widget.dart';
+import 'package:FireGuad/pages/task_fire_brigades_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:graphic/graphic.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../blocs/collection_bloc/collection_bloc.dart';
+import '../core/colors.dart';
+import '../models/center_model.dart';
+import '../models/device_model.dart';
+import '../models/forest_model.dart';
+import '../widgets/error_widget.dart';
 import '../widgets/loading_widget.dart';
 
 enum DeviceStatus {
@@ -61,29 +61,6 @@ class MapAndLocationsPage extends StatelessWidget {
                         ),
                         CircleLayer(
                           circles: [
-                            // ! forsts zone
-                            ...List.generate(
-                              state.collectionSystemModel.forestes!.length,
-                              (index) {
-                                return CircleMarker(
-                                  borderColor: Colors.black,
-                                  borderStrokeWidth: 0.5,
-                                  color: Colors.black.withOpacity(0.1),
-                                  point: LatLng(
-                                    double.parse(
-                                      state.collectionSystemModel
-                                          .forestes![index]!.latitude!,
-                                    ),
-                                    double.parse(
-                                      state.collectionSystemModel
-                                          .forestes![index]!.longitude!,
-                                    ),
-                                  ),
-                                  radius: 20000,
-                                  useRadiusInMeter: true,
-                                );
-                              },
-                            ),
                             // ! device zone
                             ...List.generate(
                               state.collectionSystemModel.devices!.length,
@@ -104,8 +81,8 @@ class MapAndLocationsPage extends StatelessWidget {
                                 }
                                 return CircleMarker(
                                   borderColor: deviceZoneColor,
-                                  borderStrokeWidth: 0.5,
-                                  color: deviceZoneColor.withOpacity(0.2),
+                                  borderStrokeWidth: 1,
+                                  color: deviceZoneColor.withOpacity(0.4),
                                   point: LatLng(
                                     double.parse(
                                       state.collectionSystemModel
@@ -117,6 +94,29 @@ class MapAndLocationsPage extends StatelessWidget {
                                     ),
                                   ),
                                   radius: 2000,
+                                  useRadiusInMeter: true,
+                                );
+                              },
+                            ),
+                            // ! forsts zone
+                            ...List.generate(
+                              state.collectionSystemModel.forestes!.length,
+                              (index) {
+                                return CircleMarker(
+                                  borderColor: Colors.black,
+                                  borderStrokeWidth: 0.5,
+                                  color: Colors.grey.withOpacity(0.2),
+                                  point: LatLng(
+                                    double.parse(
+                                      state.collectionSystemModel
+                                          .forestes![index]!.latitude!,
+                                    ),
+                                    double.parse(
+                                      state.collectionSystemModel
+                                          .forestes![index]!.longitude!,
+                                    ),
+                                  ),
+                                  radius: 10000,
                                   useRadiusInMeter: true,
                                 );
                               },
@@ -152,16 +152,20 @@ class MapAndLocationsPage extends StatelessWidget {
                               (index) {
                                 CenterModel center = state
                                     .collectionSystemModel.centers![index]!;
+                                print(center.latitude);
+                                print(center.longitude);
                                 return Marker(
                                   point: LatLng(
-                                    double.parse(center.latitude!),
+                                    double.parse(
+                                      center.latitude!,
+                                    ),
                                     double.parse(
                                       center.longitude!,
                                     ),
                                   ),
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.apartment,
-                                    color: Colors.grey,
+                                    color: Colors.black.withOpacity(0.9),
                                     size: 30,
                                   ),
                                 );
@@ -187,26 +191,37 @@ class MapAndLocationsPage extends StatelessWidget {
                               },
                             ),
                             // ! fires
-                          //   ...List.generate(
-                          //     state.collectionSystemModel.fires!.length,
-                          //     (index) {
-                          //       DeviceModel device = state
-                          //           .collectionSystemModel.devices![index]!;
-                          //       return Marker(
-                          //         point: LatLng(
-                          //           double.parse(device.latitude!) + 0.3,
-                          //           double.parse(
-                          //             device.longitude!,
-                          //           ),
-                          //         ),
-                          //         child: const Icon(
-                          //           Icons.whatshot,
-                          //           color: Colors.red,
-                          //           size: 40,
-                          //         ),
-                          //       );
-                          //     },
-                          //   ),
+                            ...List.generate(
+                              state.collectionSystemModel.devices!.length,
+                              (index) {
+                                DeviceModel device = state
+                                    .collectionSystemModel.devices![index]!;
+                                if (device.deviceValues!.status ==
+                                    DeviceStatus.Dangerous.name) {
+                                  return Marker(
+                                    point: LatLng(
+                                      double.parse(
+                                            device.latitude!,
+                                          ) +
+                                          0.001,
+                                      double.parse(
+                                        device.longitude!,
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.whatshot,
+                                      color: Colors.red,
+                                      size: 40,
+                                    ),
+                                  );
+                                } else {
+                                  return Marker(
+                                    point: LatLng(0, 0),
+                                    child: Container(),
+                                  );
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ],
@@ -255,13 +270,6 @@ class MapAndLocationsPage extends StatelessWidget {
                                 };
                               },
                             ),
-                            // data: const [
-                            //   {'genre': 'Sports', 'sold': 275},
-                            //   {'genre': 'Strategy', 'sold': 115},
-                            //   {'genre': 'Action', 'sold': 120},
-                            //   {'genre': 'Shooter', 'sold': 350},
-                            //   {'genre': 'Other', 'sold': 150},
-                            // ],
                             variables: {
                               'genre': Variable(
                                 accessor: (Map map) => map['genre'] as String,
@@ -329,13 +337,6 @@ class MapAndLocationsPage extends StatelessWidget {
                                 };
                               },
                             ),
-                            // data: const [
-                            //   {'genre': 'Sports', 'sold': 275},
-                            //   {'genre': 'Strategy', 'sold': 115},
-                            //   {'genre': 'Action', 'sold': 120},
-                            //   {'genre': 'Shooter', 'sold': 350},
-                            //   {'genre': 'Other', 'sold': 150},
-                            // ],
                             variables: {
                               'genre': Variable(
                                 accessor: (Map map) => map['genre'] as String,
@@ -406,13 +407,6 @@ class MapAndLocationsPage extends StatelessWidget {
                                 };
                               },
                             ),
-                            // data: const [
-                            //   {'genre': 'Sports', 'sold': 275},
-                            //   {'genre': 'Strategy', 'sold': 115},
-                            //   {'genre': 'Action', 'sold': 120},
-                            //   {'genre': 'Shooter', 'sold': 350},
-                            //   {'genre': 'Other', 'sold': 150},
-                            // ],
                             variables: {
                               'genre': Variable(
                                 accessor: (Map map) => map['genre'] as String,
@@ -460,7 +454,7 @@ class MapAndLocationsPage extends StatelessWidget {
                               horizontal: 20,
                               vertical: 10,
                             ),
-                            child: const Column(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
@@ -488,13 +482,13 @@ class MapAndLocationsPage extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.grey,
+                                        color: Colors.black.withOpacity(0.9),
                                       ),
                                     ),
                                     Spacer(),
                                     Icon(
                                       Icons.apartment,
-                                      color: Colors.grey,
+                                      color: Colors.black.withOpacity(0.9),
                                       size: 30,
                                     ),
                                   ],

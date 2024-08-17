@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:fire_gurad_dashboard/models/center_model.dart';
+import 'center_model.dart';
+
+
 
 class FireBrigadeModel {
   final int? id;

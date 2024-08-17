@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:fire_gurad_dashboard/models/device_model.dart';
+import 'device_model.dart';
+
+
 
 class DeviceValueModel {
   final DeviceModel? device;
